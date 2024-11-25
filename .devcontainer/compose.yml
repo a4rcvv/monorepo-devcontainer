@@ -1,0 +1,52 @@
+services:
+  dev:
+    ports:
+      - 3000:3000
+      - 8000:8000
+    volumes:
+      - type: bind
+        source: ..
+        target: /workspace
+      - type: volume
+        source: venv_backend
+        target: /workspace/backend/.venv
+      - type: volume
+        source: venv_func
+        target: /workspace/lambda/python/func/.venv
+      - type: volume
+        source: uv_cache
+        target: /opt/uv_cache
+      - type: volume
+        source: npm_cache
+        target: /opt/npm_cache
+      - type: volume
+        source: node_modules_frontend
+        target: /workspace/frontend/node_modules
+      - type: volume
+        source: node_modules_func
+        target: /workspace/lambda/node/func/node_modules
+    build:
+      dockerfile: .devcontainer/Dockerfile
+      context: ..
+    user: vscode
+    working_dir: /workspace
+    command: bash /workspace/.devcontainer/launch.sh
+  db:
+    image: postgres:15.5-alpine3.19
+    ports:
+      - 5432:5432
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  venv_backend:
+  venv_func:
+  uv_cache:
+  npm_cache:
+  node_modules_frontend:
+  node_modules_func:
+  postgres_data:

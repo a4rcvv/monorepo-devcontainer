@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "backend"
+		},
+		{
+			"path": "frontend"
+		},
+		{
+			"path": "lambda/python/func"
+		},
+		{
+			"path": "lambda/node/func"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}
